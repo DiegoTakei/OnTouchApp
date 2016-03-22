@@ -7,14 +7,9 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +20,7 @@ public class MainActivity extends Activity implements View.OnTouchListener, Sens
     private TextView textViewY;
     private TextView textViewZ;
     private TextView textViewDetail;
+    private ImageView imageView;
 
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
@@ -40,6 +36,7 @@ public class MainActivity extends Activity implements View.OnTouchListener, Sens
         textViewY = (TextView) findViewById(R.id.text_view_y);
         textViewZ = (TextView) findViewById(R.id.text_view_z);
         textViewDetail = (TextView) findViewById(R.id.text_view_detail);
+        imageView = (ImageView) findViewById(R.id.imagem);
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -51,27 +48,24 @@ public class MainActivity extends Activity implements View.OnTouchListener, Sens
 
             //Primeiro Movimento
             case MotionEvent.ACTION_DOWN:{
+                imageView.setImageResource(R.drawable.balao_azul);
                 txt.setText("Ativando um evento Touch!");
-                Toast toast = Toast.makeText(this, "Ativando um evento Touch!", Toast.LENGTH_SHORT);
-                toast.show();
                 break;
             }
 
 
             //Deslizando o dedo sobre a tela
             case MotionEvent.ACTION_MOVE:{
+                imageView.setImageResource(R.drawable.balao_vermelho);
                 txt.setText("Deslizando!");
-                Toast toast = Toast.makeText(this,"Deslizando!",Toast.LENGTH_SHORT);
-                toast.show();
                 break;
             }
 
 
             //Retirando o dedo da tela
             case MotionEvent.ACTION_UP:{
+                imageView.setImageResource(R.drawable.balao_roxo);
                 txt.setText("Retirando o dedo da tela!");
-                Toast toast = Toast.makeText(this,"Retirando o dedo da tela!",Toast.LENGTH_SHORT);
-                toast.show();
                 break;
             }
         }
@@ -103,9 +97,9 @@ public class MainActivity extends Activity implements View.OnTouchListener, Sens
         Float z = event.values[2];
 
 
-        textViewX.setText("Posição X: " + x.intValue() + " Float: " + x);
-        textViewY.setText("Posição Y: " + y.intValue() + " Float: " + y);
-        textViewZ.setText("Posição Z: " + z.intValue() + " Float: " + z);
+        textViewX.setText("Posição X: " + x.intValue());
+        textViewY.setText("Posição Y: " + y.intValue());
+        textViewZ.setText("Posição Z: " + z.intValue());
 
         if(y < 0) { // O dispositivo esta de cabeça pra baixo
             if(x > 0)
